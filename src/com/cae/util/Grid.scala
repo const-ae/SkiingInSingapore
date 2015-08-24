@@ -1,9 +1,11 @@
 package com.cae.util
 
+import scala.io.Source
+
 /**
  * Created by constantin on 24.08.15.
  */
-class Grid(width: Int, height: Int, data: List[List[Int]]) {
+class Grid(val width: Int, val height: Int, data: List[List[Int]]) {
 
   def this(){
     this(10, 10, List.fill(10, 10)((Math.random() * 10).toInt))
@@ -45,6 +47,16 @@ object Grid {
         new Grid(width, height, data)
       case e => throw new IllegalArgumentException("String did not conform to the expected format: " + e)
     }
+  }
+
+  def loadFile(location: String): Grid = {
+    val terrain = Source.fromFile(location).mkString
+    apply(terrain)
+  }
+
+  def loadURL(location: String): Grid = {
+    val terrain = Source.fromURL(location).mkString
+    apply(terrain)
   }
 
 }

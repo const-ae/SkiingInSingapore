@@ -12,25 +12,29 @@ object Experiment extends App {
 
   println("Here is the Terrain")
 
-  val terrain: String =
-    """
-      |4 4
-      |10 11 12 1
-      |9 16 13 2
-      |8 15 14 3
-      |7 6 5 4
-    """.stripMargin
+//  val terrain: String =
+//    """
+//      |4 4
+//      |10 11 12 1
+//      |9 16 13 2
+//      |8 15 14 3
+//      |7 6 5 4
+//    """.stripMargin
+//
+//  val grid = Grid(terrain)
 
-  val grid = Grid(terrain)
+  val grid = Grid.loadFile("data/map.txt")
 
   println(grid)
 
   val algo = new FindLongestPathAlgorithm(grid)
 
-  val paths = algo.followPath(2, 2)
-
-  paths foreach println
-
-  println("Finished")
+  val start = System.currentTimeMillis()
+  val path = algo.findBestPath()
+  println(path)
+  println(s"The length of the path is ${path.path.length} and the altitude  is ${path.altitude(grid)}}")
+  
+  val end = System.currentTimeMillis()
+  println(s"Finished in ${(end - start)/1000.0} seconds")
 
 }
